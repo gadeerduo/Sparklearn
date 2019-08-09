@@ -1,0 +1,54 @@
+1 Spark 安装
+1.1 Java JDK 部署
+    提供百度网盘的JDK下载地址：
+    64位下载地址：https://pan.baidu.com/s/1EU1SM4h02Uj0fI-myzys9Q
+    官网下载地址：https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+    环境环境配置：https://blog.csdn.net/SummerHmh/article/details/89518567
+    测试：cmd --> java -version
+1.2 Spark 部署
+    官网下载地址：http://spark.apache.org/
+    环境配置：https://blog.csdn.net/SummerHmh/article/details/89518567
+    测试：cmd --> spark-shell   # 若没安装hadoop最后会报错，下一步安装hadoop即可
+1.3 Hadoop 部署
+    官网下载：http://mirror.bit.edu.cn/apache/hadoop/common/hadoop-3.2.0/
+    百度网盘下载：https://pan.baidu.com/s/1WzPPZLDbXHUNTOqHPYxDrA，密码：9bv2 # 建议百度网盘，官网上可能缺少某个东西
+    配置环境变量：https://blog.csdn.net/SummerHmh/article/details/89518567
+    测试：cmd --> spark-shell   # 会弹出scala >   即安装成功
+1.4 Python环境部署
+    建议安装anaconda, 因为anaconda中包含很多库，十分省事
+    官网下载地址：https://www.anaconda.com
+    再安装pyspark 和 findspark 两个库
+    pyspark：cmd --> pip install pyspark
+    findspark: cmd --> pip install findspark
+    
+    jupyter 使用：
+    
+    import findspark
+    #可在环境变量中进行设置，即PATH中加入如下地址
+    findspark.init("D:\spark\spark-2.4.1-bin-hadoop2.7")
+    from pyspark.sql import SparkSession
+    from pyspark import SparkContext
+    from pyspark import SparkConf
+    # 创建sc
+    sc = SparkContext("local","Simple")
+ 
+ 
+ 2 Spark的设计与运行原理
+ 2.1 Spark 简介
+     参考网址：http://dblab.xmu.edu.cn/blog/1710-2/
+ 2.2 Spark运行架构
+     参考网址：http://dblab.xmu.edu.cn/blog/1710-2/
+ 2.3 RDD运行原理
+     参考网址：http://dblab.xmu.edu.cn/blog/1681-2/
+ 2.4 Spark 安装与使用
+     见上面步骤
+ 2.5 Spark 第一个案例 WordCount
+     
+     #在jupyter notebook 中测试
+     from pyspark import SparkContext
+     sc = SparkContext( 'local', 'test')
+     logFile = "E:/ShdSpark/SparkLearn/Task-1/wordcount_test.txt"
+     logData = sc.textFile(logFile, 2).cache()
+     numAs = logData.filter(lambda line: 'a' in line).count()
+     numBs = logData.filter(lambda line: 'b' in line).count()
+     print('Lines with a: %s, Lines with b: %s' % (numAs, numBs))
